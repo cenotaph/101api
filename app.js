@@ -22,7 +22,8 @@ router.get('/topic/:id', (ctx, next) => {
   responses.forEach((resp) => {
     if (resp.responses) {
       output.push({ "respondent": resp.respondent, 
-                    "response": resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].value
+                    "response": resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].value,
+                    "video": resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].video
                    })
     }
   })
