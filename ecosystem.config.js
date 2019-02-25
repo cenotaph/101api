@@ -18,7 +18,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:cenotaph/101api.git',
       path : '/var/www/testing/api',
-      'post-deploy' : 'ln -sf /var/www/testing/api/shared/data /var/www/testing/api/current/data && cp /var/www/testing/api/config.json /var/www/testing/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'ln -sf /var/www/testing/api/shared/data /var/www/testing/api/current/data && cp /var/www/testing/api/shared/config.json /var/www/testing/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
 };

@@ -30,12 +30,23 @@ async function getS3VideoUrl(exists, respondent, topic) {
   if (exists === true) {
     return await s3.getSignedUrl('getObject', {
       Bucket: config.get('bucket'),
-      Key: config.get('path') + respondent + "_" + topic + ".mp4",
+      Key: config.get('video_path') + respondent + "_" + topic + ".mp4",
       Expires: 15 * 60
     })
   } else {
-    return "false"
+    return false
   }
+}
+async function getS3SubtitleUrl(exists, respondent, topic) {
+  if (exists === true) {
+    return await s3.getSignedUrl('getObject', {
+      Bucket: config.get('bucket'),
+      Key: config.get('subs_path') +  respondent + "_" + topic + ".vtt",
+      Expires: 15 * 60
+    })
+  } else {
+    return false
+  }  
 }
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -46,10 +57,12 @@ async function asyncForEach(array, callback) {
 router.get('/topic/:id', async (ctx, next) => {
   let output = []
   let videos = []
+  let subs = []
   const collect = async () => {
     await asyncForEach(responses, async (resp) => {
       if (resp.responses) {
         videos[resp.respondent] = await getS3VideoUrl(resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].video, resp.respondent, ctx.params.id)
+        subs[resp.respondent] = await getS3SubtitleUrl(resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].video, resp.respondent, ctx.params.id)
       }
     })
   }
@@ -58,7 +71,8 @@ router.get('/topic/:id', async (ctx, next) => {
     if (resp.responses) {
       output.push({ "respondent": resp.respondent, 
                     "response": resp.responses.filter( (x) => { return x.topic == ctx.params.id })[0].value,
-                    "video": videos[resp.respondent]
+                    "video": videos[resp.respondent],
+                    "subtitles": subs[resp.respondent]
                  })
     }
   })
