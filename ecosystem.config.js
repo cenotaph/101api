@@ -18,7 +18,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:cenotaph/101api.git',
       path : '/var/www/satayksi/api',
-      'post-deploy' : 'mkdir /var/www/satayksi/api/current/config && ln -sf /var/www/satayksi/api/shared/data /var/www/satayksi/api/current/data && cp /var/www/satayksi/api/shared/config.json /var/www/satayksi/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'ln -sf /var/www/satayksi/api/shared/data /var/www/satayksi/api/current/data && cp /var/www/satayksi/api/shared/config.json /var/www/satayksi/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
