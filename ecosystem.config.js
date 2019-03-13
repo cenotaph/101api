@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name      : 'API',
+    name      : 'Satayksi API',
     script    : 'app.js',
     env: {
       NODE_ENV: 'development'
@@ -17,8 +17,8 @@ module.exports = {
       ssh_options: "StrictHostKeyChecking=no",
       ref  : 'origin/master',
       repo : 'git@github.com:cenotaph/101api.git',
-      path : '/var/www/testing/api',
-      'post-deploy' : 'mkdir /var/www/testing/api/current/config && ln -sf /var/www/testing/api/shared/data /var/www/testing/api/current/data && cp /var/www/testing/api/shared/config.json /var/www/testing/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
+      path : '/var/www/satayksi/api',
+      'post-deploy' : 'mkdir /var/www/satayksi/api/current/config && ln -sf /var/www/satayksi/api/shared/data /var/www/satayksi/api/current/data && cp /var/www/satayksi/api/shared/config.json /var/www/satayksi/api/current/config/production.json && npm install && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
